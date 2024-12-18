@@ -1,0 +1,49 @@
+/* Menu principal */
+.dropdown {
+    position: relative; /* Assegura que o submenu seja posicionado em relação ao menu */
+    z-index: 1000; /* Coloque um z-index alto para garantir que o menu principal fique acima da tabela */
+}
+
+/* Submenu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 999; /* Z-index menor para garantir que o submenu fique abaixo do menu principal */
+    padding: 8px;
+    border-radius: 3%;
+    right: 0; /* Alinha o submenu à direita */
+    top: 100%; /* Faz com que o submenu apareça logo abaixo do menu principal */
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 7px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        margin: 5px;
+        border-radius: 3%;
+    }
+
+        .dropdown-content a:hover {
+            color: red !important;
+            border: #A65F3C solid 2px;
+            border-radius: 3%;
+        }
+
+/* Mostrar o submenu quando o dropdown for ativado */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Centro do conteúdo */
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}

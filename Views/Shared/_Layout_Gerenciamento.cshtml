@@ -1,0 +1,171 @@
+﻿
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="@Html.AntiForgeryToken()" />
+    <title>Elysium Beauty</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/submenu.css">
+
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/submenu.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+   
+</head>
+
+<body>
+   
+    <header class="header">
+        @{
+            bool usuarioAutenticado = (Context.Session.GetInt32("USUARIO_ID") != null);
+            string usuarioNome = Context.Session.GetString("USUARIO_NOME") ?? "Usuário não autenticado";
+            string tipoUsuario = Context.Session.GetString("USUARIO_TIPO") ?? "Desconhecido";
+        }
+        <br />
+        <!-- Logo -->
+        <h1 class="section-title">
+            <a href="/Home/Index"><img src="~/images/Home/ElysiumBeauty_Logodotopo.png" alt="About-Image" style="width: 100px; height: 100px; border-radius:100%"></a>
+        </h1>
+
+        <!-- Logo End -->
+        <!-- Navbar -->
+        <nav class="navbar" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+
+            <!-- Links do menu -->
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fas fa-home fa-lg" aria-hidden="true" style="color: chocolate;"></i>
+                <a href="/Home/Index" style="margin-left: 10px; color: black !important">Inicio</a>
+            </span>
+
+           
+
+            <!-- Menu baseado no tipo de usuário -->
+            @if (usuarioAutenticado)
+            {
+                @if (tipoUsuario == "1")
+                {
+                    <!-- Menu do Administrador -->
+                    <div class="dropdown" style="position: relative; display: inline-block;">
+                        <span style="display: flex; align-items: center; margin-right: 20px;">
+                            <i class="fa fa-user" aria-hidden="true" style="color: chocolate;"></i>
+                            <a href="#" style="margin-left: 10px; color: black !important">@usuarioNome</a>
+                            <i class="fa fa-chevron-down" aria-hidden="true" style="color: chocolate; margin-left: 5px;"></i>
+
+                        </span>
+                        <div class="dropdown-content" style="display: none; position: absolute; background-color: #EAE7DC; width: 200px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; padding: 8px; border-radius: 3%; border: #A65F3C solid 1px; box-shadow: 5px #A65F3C;">
+                            <a href="/Usuario/Index" style="color: black !important;padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                                <i class="fa fa-users" aria-hidden="true" style="margin-right: 8px;"></i>Usuarios(s)
+                            </a>
+                            <a href="/Agendamento/Index" style="color: black !important;padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                                <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 8px; "></i>Asgendamento(s)
+                            </a>
+                            <a href="/Servico/Index" style="color: black !important;padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                                <i class="fas fa-gavel fa-lg" aria-hidden="true" style="margin-right: 8px;"></i>Serviço(s)
+                            </a>
+                            <a href="#logout" style="color: black !important;padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                                <i class="fa fa-align-justify" aria-hidden="true" style="margin-right: 8px;"></i>Relatório(s)
+                            </a>
+                           
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <!-- Menu do Usuário -->
+                    <div class="dropdown" style="position: relative; display: inline-block;">
+                        <span style="display: flex; align-items: center; margin-right: 20px;">
+                            <i class="fa fa-user" aria-hidden="true" style="color: chocolate;"></i>
+                            <a href="#" style="margin-left: 10px; color: black !important">@usuarioNome</a>
+                            <i class="fa fa-chevron-down" aria-hidden="true" style="color: chocolate; margin-left: 5px;"></i>
+
+                        </span>
+                        <div class="dropdown-content" style=" color: black !important ;display: none; position: absolute; background-color: #EAE7DC; width: 200px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; padding: 8px; border-radius: 3%; border: #A65F3C solid 1px; box-shadow: 5px #A65F3C;">
+                           
+                            <a href="/Agendamento/Gerenciamento_Agendamento_Usuario" style="color:black !important; padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                                <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 8px;color: black !important"></i>Agendamento User
+                            </a>
+                            <a href="/Agendamento/Cadastro_Agendamento" style=" color: black !important ;padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                                <i class="fa fa-file" aria-hidden="true" style="margin-right: 8px; color: black !important"></i>Cadastro Agendamento
+                            </a>
+                            @Html.AntiForgeryToken()  <!-- Isso irá gerar o token CSRF -->
+                            <a href="#" onclick="logout()" style=" color: black !important;padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                                <i class="fa fa-sign-out-alt" aria-hidden="true" style="margin-right: 8px;"></i> Sair
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <!-- Menu de Login (Quando o usuário não está autenticado) -->
+                <div class="dropdown" style="position: relative; display: inline-block;">
+                    <span style="display: flex; align-items: center; margin-right: 20px;">
+                        <i class="fa fa-user" aria-hidden="true" style="color: chocolate;"></i>
+                        <a href="/Usuario/Login" style="margin-left: 10px;">Login</a>
+                    </span>
+                </div>
+            }
+
+        </nav>
+    </header>
+
+    <div>
+        <main>
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Typed JS -->
+    <script src="~/vendors/typed/typed.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>    
+   
+    <script>
+        // Script to handle the dropdown functionality
+        document.querySelector('.dropdown').addEventListener('mouseover', function () {
+            this.querySelector('.dropdown-content').style.display = 'block';
+        });
+
+        document.querySelector('.dropdown').addEventListener('mouseout', function () {
+            this.querySelector('.dropdown-content').style.display = 'none';
+        });
+    </script>
+    <script>
+        function logout() {
+            $.ajax({
+                url: '/Usuario/Logout',  // URL correta para o método Logout
+                type: 'POST',            // Tipo de requisição POST
+                data: {
+                    '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()  // Incluindo o token CSRF
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // Redirecionar para a página de login ou outra página
+                        window.location.href = '/Home/Index';
+                    } else {
+                        // Caso haja um erro, exibe uma mensagem
+                        alert('Erro ao realizar logout: ' + (response.message || 'Erro desconhecido'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Exibe o erro de forma detalhada no console
+                    console.error("Erro no Logout:", xhr.responseText, status, error);
+                    alert('Erro ao processar a solicitação de logout. Detalhes: ' + error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

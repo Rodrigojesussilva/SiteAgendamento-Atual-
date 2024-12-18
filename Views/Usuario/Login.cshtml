@@ -1,0 +1,112 @@
+﻿@model SiteAgendamento.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Cadastro.cshtml";
+}
+
+<body>     
+    <div id="custom_container" class="custom_container">
+        <div class="tab-content">
+            <h1 class="custom_logo "><a href="/Home/Index#hero">Elysium Beauty</a></h1>
+            <!-- Pills navs -->
+            <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
+                       aria-controls="pills-login" aria-selected="true">Login</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="tab-register" href="/Usuario/Cadastro" role="tab"
+                       aria-controls="pills-register" aria-selected="false">Cadastrar</a>
+                </li>
+            </ul>
+            <!-- Pills navs -->
+            <!-- Pills content -->
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+                    @using (Html.BeginForm("VerificarLogin", "Usuario", FormMethod.Post, new { id = "loginForm", @onsubmit = "showLoaderAndAlert(); return false;" }))
+                    {
+                        @Html.AntiForgeryToken() <!-- Token CSRF para proteger o formulário -->
+
+                        <div class="text-center mb-3">
+                            <!-- Botões de login com redes sociais -->
+                            <button type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fab fa-google"></i>
+                            </button>
+                        </div>
+
+                        <!-- Campo de Email -->
+                        <div class="form-outline mb-4">
+                            @Html.LabelFor(m => m.Email, "Digite seu Email")
+                            @Html.TextBoxFor(m => m.Email, new { id = "loginEmail", placeholder = "Digite seu Email", @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo de Senha -->
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Senha, "Digite a senha")
+                            @Html.PasswordFor(m => m.Senha, new { id = "loginPassword", @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                            <span id="show-hide-password" class="input-group-text" onclick="togglePasswordVisibility()">
+                                <i class="fa fa-eye-slash"></i>
+                            </span>
+                        </div>
+
+                        <!-- Layout de 2 colunas -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <!-- Checkbox de "lembrar-me" pode ser adicionado aqui -->
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <!-- Link para recuperação de senha -->
+                                <a href="#!">Esqueci a senha</a>
+                            </div>
+                        </div>
+
+                        <!-- Botões de ação -->
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="submit" class="nav-link active btn btn-primary btn-block" style="flex: 1; margin-right: 5px;">
+                                Logar
+                            </button>
+                            <button type="button" class="nav-link active btn btn-secondary btn-block" style="flex: 1; margin-left: 5px;" onclick="window.location.href = '/Home/Index';">
+                                Voltar
+                            </button>
+                        </div>
+
+                        <!-- Mensagens de erro, caso existam -->
+                        @if (ViewData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger mt-2">
+                                @ViewData["ErrorMessage"]
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Adiciona o SweetAlert2 -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    // Função para mostrar o loader e o alerta SweetAlert
+    function showLoaderAndAlert() {
+        // Exibir um alerta do SweetAlert com um botão de confirmação "OK"
+        Swal.fire({
+            title: 'Aguarde...',
+            text: 'Estamos verificando suas informações de login!',
+            icon: 'info',
+            showConfirmButton: true, // Exibe o botão "OK"
+            confirmButtonText: 'OK', // Texto do botão
+            willClose: () => {
+                // Submeter o formulário automaticamente após o clique no "OK"
+                document.getElementById("loginForm").submit();
+            }
+        });
+    }
+</script>
